@@ -16,9 +16,7 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 
 ## 🚀 Installation
 
-### Option 1: Load Unpacked (Development)
-
-### Method 1: Download Pre-built Extension
+### Option 1: Download Pre-built Extension
 
 1. **Download**: Get the latest `element-inspector-chrome-extension.zip` from [Releases](https://github.com/govindaroyaiub/Element-Inspector-Chrome-Tool/releases)
 2. **Extract**: Unzip the downloaded file
@@ -29,7 +27,7 @@ A powerful Chrome extension for web developers and designers to inspect and anal
    - Select the extracted folder
 4. **Ready**: Element Inspector icon appears in toolbar
 
-### Method 2: Clone from Source
+### Option 2: Clone from Source
 
 1. **Clone**: `git clone https://github.com/govindaroyaiub/Element-Inspector-Chrome-Tool.git`
 2. **Install**:
@@ -39,11 +37,11 @@ A powerful Chrome extension for web developers and designers to inspect and anal
    - Select the cloned folder
 3. **Ready**: Extension is now active
 
-### Method 3: Chrome Web Store
+### Option 3: Chrome Web Store
 
 🚀 **Coming Soon** - Official Chrome Web Store listing in review
 
-## � How to Use
+## 📖 How to Use
 
 ### Quick Start
 
@@ -67,33 +65,10 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 #### Inspector Window Features
 
 - **Element Info**: Tag name, ID, classes, attributes
-- **Interactive DOM Tree**: Click parent, siblings, or children to switch inspector focus
-- **CSS Properties**: Filtered list showing only meaningful CSS values
-- **Element Switching**: Instantly analyze different elements without leaving the inspector
 - **DOM Tree**: Navigate through element relationships with visual indicators
+- **CSS Properties**: Filtered list showing only meaningful CSS values
 - **Dimensions**: Width, height, position coordinates
 - **Animations**: Detected CSS animations and GSAP libraries
-
-### 🆕 New in v1.2.1: Interactive DOM Tree
-
-- **Click Navigation**: Click any parent, sibling, or child element to inspect it
-- **Seamless Switching**: Inspector updates instantly with new element's properties
-- **Visual Feedback**: Hover effects and click hints for better usability
-- **Loading States**: Smooth transitions when switching between elements
-
-## 🛠️ Technical Details
-
-### Architecture
-
-- **Manifest V3**: Modern Chrome extension architecture
-- **Content Scripts**: Non-intrusive DOM interaction
-- **Service Worker**: Background processing and data management
-- **Chrome APIs**: Tabs, scripting, and runtime messaging
-
-### Supported Browsers
-
-- ✅ Chrome 88+
-- ✅ Chromium-based browsers (Edge, Brave, etc.)
 
 ### File Structure
 
@@ -200,104 +175,6 @@ If you encounter any issues or have questions:
 ---
 
 **Made with ❤️ for the web development community**
-
-### 🌳 **DOM Tree Visualization**
-
-- Interactive parent/children/siblings navigation
-- Visual tree structure with color coding
-- Click to navigate through DOM hierarchy
-- Expandable tree view with relationship indicators
-
-### 🎨 **CSS Analysis**
-
-- All computed CSS properties
-- Real-time property search and filtering
-- Organized property display
-- Layout and styling information
-
-### ✨ **Animation Detection**
-
-- CSS animations and transitions
-- GSAP library detection
-- Animation parameters and timing
-- Multiple animation library support
-
-### ⚡ **Advanced Features**
-
-- Export element data as JSON
-- Responsive design for all screen sizes
-- Professional UI with dark/light themes
-- Real-time data updates
-
-## Installation
-
-1. Clone or download this repository
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable "Developer mode" in the top right
-4. Click "Load unpacked" and select the extension folder
-5. The Element Inspector icon will appear in your extensions toolbar
-
-## Usage
-
-### Method 1: Using the Extension Popup
-
-1. Click the Element Inspector icon in your toolbar
-2. Click "Start Inspecting"
-3. Click on any element on the webpage
-4. Right-click and select "Element Inspector"
-
-### Method 2: Using Keyboard Shortcuts
-
-1. Press `Ctrl+Shift+I` (or `Cmd+Shift+I` on Mac) to toggle inspect mode
-2. Click on any element to select it
-3. Right-click and choose "Element Inspector"
-4. Press `Escape` to exit inspect mode
-
-### Inspector Window Features
-
-#### Element Overview
-
-- View element tag, ID, classes, and all attributes
-- See element dimensions and positioning
-- Copy element information
-
-#### DOM Tree Navigation
-
-- **Parent View**: See the element's parent and its position in the hierarchy
-- **Siblings View**: View all sibling elements at the same level
-- **Children View**: Explore child elements and nested structure
-- Click on any tree node to highlight and focus
-
-#### CSS Properties
-
-- **Computed Tab**: All final computed CSS values
-- **Search**: Filter properties by name or value
-- **Layout Tab**: Box model and positioning information
-- Real-time property search
-
-#### Animation Detection
-
-- Automatically detects CSS animations and transitions
-- GSAP library detection and version information
-- Animation timing, duration, and easing details
-- Support for multiple animation libraries
-
-## File Structure
-
-```
-Element Inspector/
-├── manifest.json          # Extension configuration
-├── background.js           # Service worker for context menus
-├── content.js             # Content script for element selection
-├── content.css            # Content script styles
-├── popup.html             # Extension popup interface
-├── popup.js               # Popup functionality
-├── inspector.html         # Main inspector window
-├── inspector.css          # Inspector window styles
-├── inspector.js           # Inspector window functionality
-├── icons/                 # Extension icons
-└── README.md             # This file
-```
 
 ## Technical Details
 
@@ -415,32 +292,3 @@ Contributions are welcome! Please feel free to submit issues and enhancement req
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
-
-## 📋 Changelog
-
-### Version 1.2.1 (Latest)
-
-- **🆕 Interactive DOM Tree Navigation**: Click any parent, sibling, or child element in the DOM tree to instantly switch the inspector to that element
-- **⚡ Real-time Element Switching**: Inspector updates all properties, CSS, and tree structure when switching elements
-- **🎨 Enhanced Visual Feedback**: Hover effects, click hints, and loading states for better user experience
-- **🔄 Seamless Workflow**: Navigate through DOM elements without closing and reopening the inspector
-
-### Version 1.1.5
-
-- Fixed inspect mode UX issues
-- Enabled continuous element inspection
-- Improved popup button state synchronization
-- Enhanced error handling and context invalidation recovery
-
-### Version 1.0.0
-
-- Initial release
-- Basic element selection and inspection
-- DOM tree visualization
-- CSS property analysis
-- Animation detection
-- Export functionality
-- Professional UI design
-- Animation detection
-- Export functionality
-- Professional UI design
