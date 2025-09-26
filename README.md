@@ -402,3 +402,4 @@ This project is open source and available under the [MIT License](LICENSE).
 - Animation detection
 - Export functionality
 - Professional UI design
+# Element-Inspector-Chrome-Tool
