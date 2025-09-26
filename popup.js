@@ -35,15 +35,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       {
         target: { tabId: tab.id },
         function: () => {
-          // Trigger inspect mode toggle
-          const event = new KeyboardEvent("keydown", {
-            key: "I",
-            ctrlKey: true,
-            shiftKey: true,
-            bubbles: true,
-          });
-          document.dispatchEvent(event);
-
+          // Call toggleInspectMode directly
+          if (typeof window.toggleInspectMode === 'function') {
+            window.toggleInspectMode();
+          }
+          
           // Return the new state
           return window.isInspectMode;
         },

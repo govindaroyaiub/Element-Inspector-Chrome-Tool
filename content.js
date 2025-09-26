@@ -106,12 +106,6 @@ function disablePageInteractions() {
         // Could not set outline on selected element
       }
 
-      // Exit inspect mode and immediately open inspector
-      isInspectMode = false;
-      document.body.style.cursor = "";
-      hideInspectModeIndicator();
-      enablePageInteractions();
-
       // Show brief success message then open inspector
       showSelectionSuccess(elementBelow);
 
@@ -173,7 +167,7 @@ function showInspectModeIndicator() {
       font-size: 14px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     ">
-      🔍 Inspect Mode Active - Click any element to inspect it
+      🔍 Inspect Mode Active - Click elements to inspect • Use popup to stop
     </div>
   `;
   document.body.appendChild(indicator);
@@ -273,7 +267,7 @@ function showSelectionSuccess(element) {
     font-size: 14px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   `;
-  message.innerHTML = `✅ Selected: ${tagName}${id}${className}<br><small>Opening inspector...</small>`;
+  message.innerHTML = `✅ Selected: ${tagName}${id}${className}<br><small>Opening inspector... Still inspecting!</small>`;
   document.body.appendChild(message);
 
   setTimeout(() => {
@@ -317,12 +311,7 @@ document.addEventListener("contextmenu", (e) => {
       // Could not set outline style
     }
 
-    // Exit inspect mode and open inspector
-    isInspectMode = false;
-    document.body.style.cursor = "";
-    hideInspectModeIndicator();
-    enablePageInteractions();
-
+    // Open inspector while staying in inspect mode
     setTimeout(() => {
       openInspectorWindow();
       // Remove outline with error handling
