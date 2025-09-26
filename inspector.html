@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element Inspector - Detailed View</title>
+    <link rel="stylesheet" href="inspector.css">
+</head>
+
+<body>
+    <div class="inspector-container">
+        <header class="inspector-header">
+            <h1>🔍 Element Inspector</h1>
+            <div class="header-actions">
+                <button id="refreshBtn" class="btn-secondary">🔄 Refresh</button>
+                <button id="exportBtn" class="btn-secondary">📄 Export</button>
+                <button class="btn-secondary close-btn">✕ Close</button>
+            </div>
+        </header>
+
+        <div class="inspector-content">
+            <!-- Element Overview -->
+            <section class="panel" id="overviewPanel">
+                <div class="panel-header">
+                    <h2>📋 Element Overview</h2>
+                    <button class="collapse-btn" data-target="overview">−</button>
+                </div>
+                <div class="panel-content" id="overview">
+                    <div class="element-preview">
+                        <div class="element-tag" id="elementTag"></div>
+                        <div class="element-path" id="elementPath"></div>
+                        <div class="element-dimensions" id="elementDimensions"></div>
+                    </div>
+                    <div class="attribute-grid" id="attributeGrid"></div>
+                </div>
+            </section>
+
+            <!-- DOM Tree -->
+            <section class="panel" id="treePanel">
+                <div class="panel-header">
+                    <h2>🌳 DOM Tree</h2>
+                    <button class="collapse-btn" data-target="domTree">−</button>
+                </div>
+                <div class="panel-content" id="domTree">
+                    <div class="tree-navigation">
+                        <button id="parentBtn" class="tree-nav-btn">⬆️ Parent</button>
+                        <button id="siblingsBtn" class="tree-nav-btn">↔️ Siblings</button>
+                        <button id="childrenBtn" class="tree-nav-btn">⬇️ Children</button>
+                    </div>
+                    <div class="tree-container" id="treeContainer"></div>
+                </div>
+            </section>
+
+            <!-- CSS Properties -->
+            <section class="panel" id="cssPanel">
+                <div class="panel-header">
+                    <h2>🎨 CSS Properties</h2>
+                    <button class="collapse-btn" data-target="cssProperties">−</button>
+                </div>
+                <div class="panel-content" id="cssProperties">
+                    <div class="css-content">
+                        <div class="search-box">
+                            <input type="text" id="cssSearch" placeholder="Search CSS properties...">
+                        </div>
+                        <div class="css-properties-list" id="cssPropertiesList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Animations -->
+            <section class="panel" id="animationPanel">
+                <div class="panel-header">
+                    <h2>✨ Animations & Transitions</h2>
+                    <button class="collapse-btn" data-target="animations">−</button>
+                </div>
+                <div class="panel-content" id="animations">
+                    <div class="animation-types">
+                        <div class="animation-category" id="cssAnimations">
+                            <h3>CSS Animations</h3>
+                            <div class="animation-list"></div>
+                        </div>
+                        <div class="animation-category" id="gsapAnimations">
+                            <h3>GSAP Animations</h3>
+                            <div class="animation-list"></div>
+                        </div>
+                        <div class="animation-category" id="otherAnimations">
+                            <h3>Other Libraries</h3>
+                            <div class="animation-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JavaScript Events -->
+            <section class="panel" id="eventsPanel">
+                <div class="panel-header">
+                    <h2>⚡ Event Listeners</h2>
+                    <button class="collapse-btn" data-target="events">−</button>
+                </div>
+                <div class="panel-content" id="events">
+                    <div class="events-list" id="eventsList"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- No Data State -->
+    <div class="no-data" id="noData" style="display: none;">
+        <div class="no-data-content">
+            <h2>No Element Selected</h2>
+            <p>Please go back to the webpage, enter inspect mode, select an element, and right-click to open Element
+                Inspector.</p>
+            <button class="btn-primary close-btn">Close Window</button>
+        </div>
+    </div>
+
+    <script src="inspector.js"></script>
+</body>
+
+</html>

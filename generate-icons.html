@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Generate Extension Icons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .icon-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .icon-preview {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon {
+            margin: 10px;
+            border: 1px solid #ddd;
+        }
+
+        canvas {
+            border-radius: 4px;
+        }
+
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .download-btn {
+            background: #007ACC;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Element Inspector - Icon Generator</h1>
+    <p>This page generates the required PNG icons for the Chrome extension.</p>
+
+    <div class="icon-container">
+        <div class="icon-preview">
+            <h3>16x16</h3>
+            <canvas id="icon16" width="16" height="16" class="icon"></canvas>
+            <br><button class="download-btn" onclick="downloadIcon('icon16', '16')">Download</button>
+        </div>
+
+        <div class="icon-preview">
+            <h3>32x32</h3>
+            <canvas id="icon32" width="32" height="32" class="icon"></canvas>
+            <br><button class="download-btn" onclick="downloadIcon('icon32', '32')">Download</button>
+        </div>
+
+        <div class="icon-preview">
+            <h3>48x48</h3>
+            <canvas id="icon48" width="48" height="48" class="icon"></canvas>
+            <br><button class="download-btn" onclick="downloadIcon('icon48', '48')">Download</button>
+        </div>
+
+        <div class="icon-preview">
+            <h3>128x128</h3>
+            <canvas id="icon128" width="128" height="128" class="icon"></canvas>
+            <br><button class="download-btn" onclick="downloadIcon('icon128', '128')">Download</button>
+        </div>
+    </div>
+
+    <button onclick="generateAllIcons()"
+        style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 16px;">
+        Generate All Icons
+    </button>
+
+    <div class="instructions">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Click "Generate All Icons" to create the icon graphics</li>
+            <li>Right-click each icon and select "Save image as..." or use the download buttons</li>
+            <li>Save them as:
+                <ul>
+                    <li>icon16.png (16x16)</li>
+                    <li>icon32.png (32x32)</li>
+                    <li>icon48.png (48x48)</li>
+                    <li>icon128.png (128x128)</li>
+                </ul>
+            </li>
+            <li>Place all PNG files in the "icons" folder</li>
+            <li>The Chrome extension will now have proper icons</li>
+        </ol>
+    </div>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            const scale = size / 128; // Base size is 128
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Background circle
+            ctx.fillStyle = '#007ACC';
+            ctx.strokeStyle = '#005a9e';
+            ctx.lineWidth = 2 * scale;
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, 60 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+
+            // Magnifying glass
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 4 * scale;
+            ctx.beginPath();
+            ctx.arc(52 * scale, 52 * scale, 20 * scale, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Magnifying glass handle
+            ctx.beginPath();
+            ctx.lineCap = 'round';
+            ctx.moveTo(68 * scale, 68 * scale);
+            ctx.lineTo(84 * scale, 84 * scale);
+            ctx.stroke();
+
+            // Element representation
+            ctx.lineWidth = 2 * scale;
+            ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+            ctx.beginPath();
+            ctx.roundRect(40 * scale, 40 * scale, 24 * scale, 24 * scale, 2 * scale);
+            ctx.stroke();
+
+            ctx.lineWidth = 1 * scale;
+            ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx.beginPath();
+            ctx.roundRect(44 * scale, 44 * scale, 16 * scale, 16 * scale, 1 * scale);
+            ctx.stroke();
+
+            // Code brackets (simplified for small sizes)
+            if (size >= 32) {
+                ctx.fillStyle = 'white';
+                ctx.font = `${20 * scale}px monospace`;
+                ctx.fontWeight = 'bold';
+                ctx.fillText('<>', 20 * scale, 100 * scale);
+            }
+
+            // Inspection dots
+            ctx.fillStyle = '#ff6b35';
+            ctx.beginPath();
+            ctx.arc(96 * scale, 32 * scale, 3 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = '#28a745';
+            ctx.beginPath();
+            ctx.arc(32 * scale, 96 * scale, 3 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+
+            ctx.fillStyle = '#ffc107';
+            ctx.beginPath();
+            ctx.arc(96 * scale, 96 * scale, 3 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function generateAllIcons() {
+            const sizes = [16, 32, 48, 128];
+            sizes.forEach(size => {
+                const canvas = document.getElementById(`icon${size}`);
+                drawIcon(canvas, size);
+            });
+        }
+
+        function downloadIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Add roundRect method for older browsers
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.lineTo(x + w - r, y);
+                this.quadraticCurveTo(x + w, y, x + w, y + r);
+                this.lineTo(x + w, y + h - r);
+                this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                this.lineTo(x + r, y + h);
+                this.quadraticCurveTo(x, y + h, x, y + h - r);
+                this.lineTo(x, y + r);
+                this.quadraticCurveTo(x, y, x + r, y);
+                this.closePath();
+            };
+        }
+
+        // Auto-generate on page load
+        window.onload = generateAllIcons;
+    </script>
+</body>
+
+</html>

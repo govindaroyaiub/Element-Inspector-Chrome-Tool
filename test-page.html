@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element Inspector Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .test-element {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .animated-box {
+            width: 100px;
+            height: 100px;
+            background: #007ACC;
+            margin: 20px;
+            animation: bounce 2s infinite;
+            border-radius: 10px;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .complex-element {
+            border: 2px solid #333;
+            padding: 15px;
+            margin: 10px;
+            background: #f8f9fa;
+        }
+
+        .nested {
+            background: #e9ecef;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .deeply-nested {
+            background: #dee2e6;
+            padding: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="main-title" class="page-title">Element Inspector Test Page</h1>
+
+        <div class="test-element" data-test="example">
+            <h2>Test Element with Gradient</h2>
+            <p>This is a test element with various properties. Try selecting this!</p>
+        </div>
+
+        <div class="animated-box" id="animated-element"></div>
+
+        <div class="complex-element">
+            <h3>Complex DOM Structure</h3>
+            <div class="nested">
+                <p>Nested paragraph</p>
+                <div class="deeply-nested">
+                    <span>Deeply nested content</span>
+                    <button onclick="alert('Button clicked!')">Test Button</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions"
+            style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <h3>🧪 Testing Instructions:</h3>
+            <ol>
+                <li><strong>Load the Extension:</strong> Make sure Element Inspector is loaded in chrome://extensions/
+                </li>
+                <li><strong>Open Developer Console:</strong> Press F12 to check for errors</li>
+                <li><strong>Try Method 1:</strong> Click the extension icon → "Start Inspecting" → Click any element
+                    above → Right-click anywhere</li>
+                <li><strong>Try Method 2:</strong> Press Cmd+Shift+I → Click any element → Right-click</li>
+                <li><strong>Check Console:</strong> Look for "Element Inspector content script loaded" message</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Add some test JavaScript
+        console.log('Test page loaded');
+
+        // Test if extension content script is working
+        setTimeout(() => {
+            if (window.elementInspectorTarget) {
+                console.log('✅ Element Inspector extension detected');
+            } else {
+                console.log('❌ Element Inspector extension not detected');
+            }
+        }, 1000);
+
+        // Add click listeners to test elements
+        document.querySelectorAll('.test-element, .animated-box, .complex-element').forEach(el => {
+            el.addEventListener('click', (e) => {
+                console.log('Clicked element:', e.target.tagName, e.target.className);
+            });
+        });
+    </script>
+</body>
+
+</html>

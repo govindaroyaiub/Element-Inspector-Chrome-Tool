@@ -1,0 +1,478 @@
+/* Inspector Window Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.inspector-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.inspector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.inspector-header h1 {
+    font-size: 24px;
+    color: #007ACC;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #007ACC;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #005a9e;
+}
+
+.btn-secondary {
+    background: #e9ecef;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #dee2e6;
+}
+
+/* Panels */
+.panel {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.panel-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #333;
+}
+
+.collapse-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.collapse-btn:hover {
+    background: #e9ecef;
+}
+
+.panel-content {
+    padding: 20px;
+}
+
+/* Element Overview */
+.element-preview {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.element-tag {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007ACC;
+    margin-bottom: 8px;
+}
+
+.element-path {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.element-dimensions {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.element-dimensions span {
+    background: #e9ecef;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.attribute-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+.attribute-item {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 4px solid #007ACC;
+}
+
+.attribute-name {
+    font-weight: 600;
+    margin-right: 8px;
+    color: #333;
+    min-width: 80px;
+}
+
+.attribute-value {
+    font-family: 'Monaco', 'Consolas', monospace;
+    color: #666;
+    word-break: break-all;
+}
+
+/* DOM Tree */
+.tree-navigation {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tree-nav-btn {
+    padding: 8px 12px;
+    background: #e9ecef;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.tree-nav-btn:hover {
+    background: #dee2e6;
+}
+
+.tree-nav-btn.active {
+    background: #007ACC;
+    color: white;
+}
+
+.tree-container {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+}
+
+.tree-node {
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.tree-node:hover {
+    background: #e9ecef;
+}
+
+.tree-node.current {
+    background: #007ACC;
+    color: white;
+}
+
+.tree-node.parent {
+    background: #28a745;
+    color: white;
+}
+
+.tree-node.sibling {
+    background: #ffc107;
+    color: #333;
+}
+
+.tree-node.child {
+    background: #17a2b8;
+    color: white;
+}
+
+.node-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.node-tag {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-weight: bold;
+}
+
+.node-attributes {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.node-children {
+    margin-left: 20px;
+    border-left: 2px solid #e9ecef;
+    padding-left: 12px;
+}
+
+/* CSS Properties */
+.css-tabs {
+    display: flex;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    background: #f8f9fa;
+}
+
+.tab-btn.active {
+    border-bottom-color: #007ACC;
+    color: #007ACC;
+    font-weight: 600;
+}
+
+.search-box {
+    margin-bottom: 16px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #007ACC;
+    box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.1);
+}
+
+.css-properties-list {
+    display: grid;
+    gap: 8px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.css-property {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #007ACC;
+}
+
+.css-property:hover {
+    background: #e9ecef;
+}
+
+.css-property-name {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-weight: 600;
+    color: #333;
+}
+
+.css-property-value {
+    font-family: 'Monaco', 'Consolas', monospace;
+    color: #666;
+    text-align: right;
+    max-width: 50%;
+    word-break: break-all;
+}
+
+/* Animations */
+.animation-category {
+    margin-bottom: 20px;
+}
+
+.animation-category h3 {
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 16px;
+}
+
+.animation-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.animation-item.gsap {
+    border-left-color: #ff6b35;
+}
+
+.animation-item.transition {
+    border-left-color: #007ACC;
+}
+
+.animation-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.animation-details {
+    font-size: 14px;
+    color: #666;
+    font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Events */
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border-left: 4px solid #dc3545;
+}
+
+.event-type {
+    font-weight: 600;
+    color: #333;
+}
+
+.event-count {
+    background: #dc3545;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* No Data State */
+.no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.no-data-content h2 {
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.no-data-content p {
+    color: #888;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .inspector-container {
+        padding: 10px;
+    }
+
+    .inspector-header {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .attribute-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tree-navigation {
+        flex-wrap: wrap;
+    }
+
+    .css-property {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .css-property-value {
+        max-width: 100%;
+        text-align: left;
+    }
+}
