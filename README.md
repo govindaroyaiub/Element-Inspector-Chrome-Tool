@@ -198,7 +198,7 @@ If you encounter any issues or have questions:
 - Multiple animation library support
 
 ### ⚡ **Advanced Features**
-.
+.....
 - Export element data as JSON
 - Responsive design for all screen sizes
 - Professional UI with dark/light themes
@@ -402,4 +402,3 @@ This project is open source and available under the [MIT License](LICENSE).
 - Animation detection
 - Export functionality
 - Professional UI design
-# Element-Inspector-Chrome-Tool
