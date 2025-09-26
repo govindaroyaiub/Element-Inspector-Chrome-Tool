@@ -17,15 +17,27 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 
 ### Option 1: Load Unpacked (Development)
 
-1. Download or clone this repository
-2. Open Chrome and navigate to `chrome://extensions/`
-3. Enable "Developer mode" in the top right
-4. Click "Load unpacked" and select the extension folder
-5. The Element Inspector icon will appear in your toolbar
+### Method 1: Download Pre-built Extension
+1. **Download**: Get the latest `element-inspector-chrome-extension.zip` from [Releases](https://github.com/govindaroyaiub/Element-Inspector-Chrome-Tool/releases)
+2. **Extract**: Unzip the downloaded file
+3. **Install**: 
+   - Open Chrome → `chrome://extensions/`
+   - Enable "Developer mode" (top right)
+   - Click "Load unpacked" 
+   - Select the extracted folder
+4. **Ready**: Element Inspector icon appears in toolbar
 
-### Option 2: Chrome Web Store (Coming Soon)
+### Method 2: Clone from Source
+1. **Clone**: `git clone https://github.com/govindaroyaiub/Element-Inspector-Chrome-Tool.git`
+2. **Install**:
+   - Open Chrome → `chrome://extensions/`
+   - Enable "Developer mode"
+   - Click "Load unpacked"
+   - Select the cloned folder
+3. **Ready**: Extension is now active
 
-_This extension will be available on the Chrome Web Store soon._
+### Method 3: Chrome Web Store
+🚀 **Coming Soon** - Official Chrome Web Store listing in review
 
 ## � How to Use
 
