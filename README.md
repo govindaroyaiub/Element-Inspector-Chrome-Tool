@@ -6,7 +6,8 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 
 - **🎯 Element Selection**: Click any element on the page to inspect it
 - **📊 CSS Properties Analysis**: View all computed CSS properties with filtered meaningful values
-- **🌳 DOM Tree Visualization**: Navigate through parent, children, and sibling elements
+- **🌳 Interactive DOM Tree**: Navigate through parent, children, and sibling elements with click-to-inspect
+- **🔄 Element Switching**: Click any tree node to instantly switch inspector to that element
 - **🎬 Animation Detection**: Detect CSS animations, transitions, and GSAP libraries
 - **📐 Element Dimensions**: Get precise measurements and positioning data
 - **⚡ Real-time Inspection**: Instant analysis without page refresh
@@ -66,10 +67,18 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 #### Inspector Window Features
 
 - **Element Info**: Tag name, ID, classes, attributes
+- **Interactive DOM Tree**: Click parent, siblings, or children to switch inspector focus
 - **CSS Properties**: Filtered list showing only meaningful CSS values
-- **DOM Tree**: Navigate through element relationships
+- **Element Switching**: Instantly analyze different elements without leaving the inspector
+- **DOM Tree**: Navigate through element relationships with visual indicators
 - **Dimensions**: Width, height, position coordinates
 - **Animations**: Detected CSS animations and GSAP libraries
+
+### 🆕 New in v1.2.1: Interactive DOM Tree
+- **Click Navigation**: Click any parent, sibling, or child element to inspect it
+- **Seamless Switching**: Inspector updates instantly with new element's properties
+- **Visual Feedback**: Hover effects and click hints for better usability
+- **Loading States**: Smooth transitions when switching between elements
 
 ## 🛠️ Technical Details
 
@@ -406,14 +415,28 @@ Contributions are welcome! Please feel free to submit issues and enhancement req
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## Changelog
+## 📋 Changelog
+
+### Version 1.2.1 (Latest)
+- **🆕 Interactive DOM Tree Navigation**: Click any parent, sibling, or child element in the DOM tree to instantly switch the inspector to that element
+- **⚡ Real-time Element Switching**: Inspector updates all properties, CSS, and tree structure when switching elements
+- **🎨 Enhanced Visual Feedback**: Hover effects, click hints, and loading states for better user experience
+- **🔄 Seamless Workflow**: Navigate through DOM elements without closing and reopening the inspector
+
+### Version 1.1.5
+- Fixed inspect mode UX issues
+- Enabled continuous element inspection
+- Improved popup button state synchronization
+- Enhanced error handling and context invalidation recovery
 
 ### Version 1.0.0
-
 - Initial release
 - Basic element selection and inspection
-- DOM tree visualization
+- DOM tree visualization  
 - CSS property analysis
+- Animation detection
+- Export functionality
+- Professional UI design
 - Animation detection
 - Export functionality
 - Professional UI design

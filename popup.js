@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         target: { tabId: tab.id },
         function: () => {
           // Call toggleInspectMode directly
-          if (typeof window.toggleInspectMode === 'function') {
+          if (typeof window.toggleInspectMode === "function") {
             window.toggleInspectMode();
           }
-          
+
           // Return the new state
           return window.isInspectMode;
         },

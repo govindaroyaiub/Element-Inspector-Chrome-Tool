@@ -209,15 +209,35 @@ class ElementInspector {
                     ? `<span>(${nodeData.children.length} children)</span>`
                     : ""
                 }
+                ${type !== "current" ? '<span class="click-hint">🔍 Click to inspect</span>' : '<span class="current-hint">📍 Current</span>'}
             </div>
         `;
 
+    // Store node data for clicking
+    nodeElement.dataset.nodeData = JSON.stringify(nodeData);
+    nodeElement.dataset.nodeType = type;
+
     container.appendChild(nodeElement);
 
-    // Add click handler for navigation
-    nodeElement.addEventListener("click", () => {
-      this.highlightTreeNode(nodeElement);
-    });
+    // Add click handler for navigation - only for non-current elements
+    if (type !== "current") {
+      nodeElement.style.cursor = "pointer";
+      nodeElement.addEventListener("click", (e) => {
+        e.stopPropagation();
+        this.switchToElement(nodeData, type);
+      });
+      
+      // Add hover effects
+      nodeElement.addEventListener("mouseenter", () => {
+        nodeElement.style.backgroundColor = "#f8f9fa";
+        nodeElement.style.transform = "translateX(5px)";
+      });
+      
+      nodeElement.addEventListener("mouseleave", () => {
+        nodeElement.style.backgroundColor = "";
+        nodeElement.style.transform = "";
+      });
+    }
   }
 
   highlightTreeNode(nodeElement) {
@@ -230,6 +250,283 @@ class ElementInspector {
     // Highlight selected node
     nodeElement.style.transform = "scale(1.02)";
     nodeElement.style.boxShadow = "0 4px 8px rgba(0, 122, 204, 0.3)";
+  }
+
+  // New function to switch inspector to a different element
+  async switchToElement(nodeData, nodeType) {
+    // Show loading state
+    this.showLoadingState();
+    
+    try {
+      // Find the actual DOM element using the nodeData
+      const targetElement = await this.findDOMElement(nodeData);
+      
+      if (!targetElement) {
+        this.showError("Could not find the selected element in the DOM");
+        return;
+      }
+
+      // Send message to content script to gather new element data
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: (elementSelector) => {
+          // Helper function to gather element data (similar to content.js)
+          function gatherElementDataForInspector(element) {
+            if (!element || !element.tagName) {
+              throw new Error("Invalid element provided");
+            }
+
+            const computedStyle = window.getComputedStyle(element);
+            const rect = element.getBoundingClientRect();
+
+            // Get all CSS properties
+            const cssProperties = {};
+            try {
+              for (let i = 0; i < computedStyle.length; i++) {
+                const property = computedStyle[i];
+                cssProperties[property] = computedStyle.getPropertyValue(property);
+              }
+            } catch (error) {
+              cssProperties["error"] = "Could not retrieve CSS properties";
+            }
+
+            // Helper function for className
+            function getElementClassName(element) {
+              if (!element.className) return "";
+              if (typeof element.className === "string") {
+                return element.className;
+              } else if (element.className.baseVal !== undefined) {
+                return element.className.baseVal || "";
+              }
+              return "";
+            }
+
+            // DOM tree data
+            const getDOMTreeData = (el, maxDepth = 3, currentDepth = 0) => {
+              if (currentDepth >= maxDepth || !el || !el.tagName) return null;
+              
+              try {
+                return {
+                  tagName: el.tagName,
+                  id: el.id || "",
+                  className: getElementClassName(el),
+                  textContent: el.textContent ? el.textContent.substring(0, 100) : "",
+                  children: Array.from(el.children)
+                    .map((child) => getDOMTreeData(child, maxDepth, currentDepth + 1))
+                    .filter(Boolean),
+                  attributes: Array.from(el.attributes).reduce((acc, attr) => {
+                    acc[attr.name] = attr.value;
+                    return acc;
+                  }, {}),
+                };
+              } catch (error) {
+                return null;
+              }
+            };
+
+            return {
+              element: {
+                tagName: element.tagName,
+                id: element.id || "",
+                className: getElementClassName(element),
+                innerHTML: element.innerHTML.substring(0, 1000),
+                outerHTML: element.outerHTML.substring(0, 1000),
+                textContent: element.textContent ? element.textContent.substring(0, 200) : "",
+                attributes: Array.from(element.attributes).reduce((acc, attr) => {
+                  acc[attr.name] = attr.value;
+                  return acc;
+                }, {}),
+              },
+              dimensions: {
+                width: rect.width,
+                height: rect.height,
+                top: rect.top,
+                left: rect.left,
+                right: rect.right,
+                bottom: rect.bottom,
+              },
+              cssProperties,
+              domTree: {
+                current: getDOMTreeData(element),
+                parent: element.parentElement ? getDOMTreeData(element.parentElement, 2) : null,
+                siblings: element.parentElement
+                  ? Array.from(element.parentElement.children)
+                      .filter((sibling) => sibling !== element)
+                      .map((sibling) => getDOMTreeData(sibling, 1))
+                      .slice(0, 10)
+                  : [],
+              },
+              timestamp: Date.now(),
+            };
+          }
+
+          // Find element using the selector passed from inspector
+          const element = document.querySelector(elementSelector);
+          if (element) {
+            return gatherElementDataForInspector(element);
+          }
+          return null;
+        },
+        args: [this.generateElementSelector(nodeData)]
+      }, (result) => {
+        if (result && result[0] && result[0].result) {
+          // Update inspector with new element data
+          this.elementData = result[0].result;
+          this.renderInspector();
+          this.showSwitchSuccess(nodeType, nodeData);
+        } else {
+          this.showError("Could not gather data for the selected element");
+        }
+      });
+
+    } catch (error) {
+      console.error("Error switching to element:", error);
+      this.showError("Failed to switch to selected element");
+    }
+  }
+
+  // Generate a CSS selector for the node data
+  generateElementSelector(nodeData) {
+    let selector = nodeData.tagName.toLowerCase();
+    
+    if (nodeData.id) {
+      selector += `#${nodeData.id}`;
+    } else if (nodeData.className) {
+      const classes = nodeData.className.split(' ').filter(c => c.length > 0);
+      if (classes.length > 0) {
+        selector += '.' + classes.join('.');
+      }
+    }
+    
+    return selector;
+  }
+
+  // Find DOM element using nodeData
+  async findDOMElement(nodeData) {
+    // This is a simplified approach - in a real implementation you might need more sophisticated matching
+    const selector = this.generateElementSelector(nodeData);
+    
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      const result = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: (sel) => {
+          const element = document.querySelector(sel);
+          return element ? true : false;
+        },
+        args: [selector]
+      });
+      
+      return result[0].result;
+    } catch (error) {
+      console.error("Error finding DOM element:", error);
+      return false;
+    }
+  }
+
+  // Show loading state while switching elements
+  showLoadingState() {
+    const inspectorContainer = document.querySelector(".inspector-container");
+    const loadingOverlay = document.createElement("div");
+    loadingOverlay.id = "loadingOverlay";
+    loadingOverlay.innerHTML = `
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p>Loading element data...</p>
+      </div>
+    `;
+    loadingOverlay.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    `;
+    
+    // Remove existing overlay
+    const existing = document.getElementById("loadingOverlay");
+    if (existing) existing.remove();
+    
+    inspectorContainer.style.position = "relative";
+    inspectorContainer.appendChild(loadingOverlay);
+    
+    // Auto-remove after timeout
+    setTimeout(() => {
+      if (loadingOverlay.parentNode) {
+        loadingOverlay.remove();
+      }
+    }, 5000);
+  }
+
+  // Show success message when switching elements
+  showSwitchSuccess(nodeType, nodeData) {
+    // Remove loading overlay
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    if (loadingOverlay) loadingOverlay.remove();
+    
+    const message = document.createElement("div");
+    message.className = "switch-success";
+    message.innerHTML = `✅ Switched to ${nodeType}: ${nodeData.tagName.toLowerCase()}${nodeData.id ? '#' + nodeData.id : ''}`;
+    message.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    `;
+    
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+      if (message.parentNode) {
+        message.remove();
+      }
+    }, 3000);
+  }
+
+  // Show error message
+  showError(message) {
+    // Remove loading overlay
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    if (loadingOverlay) loadingOverlay.remove();
+    
+    const errorDiv = document.createElement("div");
+    errorDiv.className = "switch-error";
+    errorDiv.innerHTML = `❌ ${message}`;
+    errorDiv.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 10000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    setTimeout(() => {
+      if (errorDiv.parentNode) {
+        errorDiv.remove();
+      }
+    }, 4000);
   }
 
   renderCSSProperties() {
