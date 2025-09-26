@@ -416,11 +416,53 @@ function gatherElementData(element) {
     if (currentDepth >= maxDepth || !el || !el.tagName) return null;
 
     try {
+      // Generate a more robust selector for the element
+      const generateRobustSelector = (element) => {
+        const path = [];
+        let current = element;
+
+        while (current && current !== document.body) {
+          let selector = current.tagName.toLowerCase();
+
+          // Add ID if available
+          if (current.id) {
+            selector += `#${current.id}`;
+            path.unshift(selector);
+            break; // ID should be unique, so we can stop here
+          }
+
+          // Add classes if available
+          const className = getElementClassName(current);
+          if (className) {
+            const classes = className.split(" ").filter((c) => c.length > 0);
+            if (classes.length > 0) {
+              selector += "." + classes.slice(0, 3).join(".");
+            }
+          }
+
+          // Add nth-child position for specificity
+          if (current.parentElement) {
+            const siblings = Array.from(current.parentElement.children);
+            const index = siblings.indexOf(current);
+            if (index >= 0) {
+              selector += `:nth-child(${index + 1})`;
+            }
+          }
+
+          path.unshift(selector);
+          current = current.parentElement;
+        }
+
+        return path.join(" > ");
+      };
+
       return {
         tagName: el.tagName,
         id: el.id || "",
         className: getElementClassName(el),
         textContent: el.textContent ? el.textContent.substring(0, 100) : "",
+        selector: generateRobustSelector(el), // Add robust selector
+        xpath: generateXPath(el), // Add XPath as backup
         children: Array.from(el.children)
           .map((child) => getDOMTreeData(child, maxDepth, currentDepth + 1))
           .filter(Boolean),
@@ -432,6 +474,47 @@ function gatherElementData(element) {
     } catch (error) {
       return null;
     }
+  };
+
+  // Helper function to generate XPath
+  const generateXPath = (element) => {
+    if (!element || element === document) return "";
+
+    if (element.id) {
+      return `//*[@id="${element.id}"]`;
+    }
+
+    const path = [];
+    for (; element && element.nodeType === 1; element = element.parentNode) {
+      let index = 0;
+      let hasFollowingSiblings = false;
+
+      for (
+        let sibling = element.previousSibling;
+        sibling;
+        sibling = sibling.previousSibling
+      ) {
+        if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
+          index++;
+        }
+      }
+
+      for (
+        let sibling = element.nextSibling;
+        sibling && !hasFollowingSiblings;
+        sibling = sibling.nextSibling
+      ) {
+        if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
+          hasFollowingSiblings = true;
+        }
+      }
+
+      const tagName = element.tagName.toLowerCase();
+      const pathIndex = index || hasFollowingSiblings ? `[${index + 1}]` : "";
+      path.splice(0, 0, tagName + pathIndex);
+    }
+
+    return path.length ? "/" + path.join("/") : "";
   };
 
   // Check for animations (GSAP, CSS animations, etc.)

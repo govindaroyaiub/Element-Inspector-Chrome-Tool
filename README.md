@@ -75,6 +75,7 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 - **Animations**: Detected CSS animations and GSAP libraries
 
 ### 🆕 New in v1.2.1: Interactive DOM Tree
+
 - **Click Navigation**: Click any parent, sibling, or child element to inspect it
 - **Seamless Switching**: Inspector updates instantly with new element's properties
 - **Visual Feedback**: Hover effects and click hints for better usability
@@ -418,21 +419,24 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📋 Changelog
 
 ### Version 1.2.1 (Latest)
+
 - **🆕 Interactive DOM Tree Navigation**: Click any parent, sibling, or child element in the DOM tree to instantly switch the inspector to that element
 - **⚡ Real-time Element Switching**: Inspector updates all properties, CSS, and tree structure when switching elements
 - **🎨 Enhanced Visual Feedback**: Hover effects, click hints, and loading states for better user experience
 - **🔄 Seamless Workflow**: Navigate through DOM elements without closing and reopening the inspector
 
 ### Version 1.1.5
+
 - Fixed inspect mode UX issues
 - Enabled continuous element inspection
 - Improved popup button state synchronization
 - Enhanced error handling and context invalidation recovery
 
 ### Version 1.0.0
+
 - Initial release
 - Basic element selection and inspection
-- DOM tree visualization  
+- DOM tree visualization
 - CSS property analysis
 - Animation detection
 - Export functionality
