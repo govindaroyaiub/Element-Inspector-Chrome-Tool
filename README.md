@@ -5,7 +5,7 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 ## ✨ Features
 
 - **🎯 Element Selection**: Click any element on the page to inspect it
-- **📊 CSS Properties Analysis**: View all computed CSS properties with filtered meaningful values  
+- **📊 CSS Properties Analysis**: View all computed CSS properties with filtered meaningful values
 - **🌳 DOM Tree Visualization**: Navigate through parent, children, and sibling elements
 - **🎬 Animation Detection**: Detect CSS animations, transitions, and GSAP libraries
 - **📐 Element Dimensions**: Get precise measurements and positioning data
@@ -16,6 +16,7 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 ## 🚀 Installation
 
 ### Option 1: Load Unpacked (Development)
+
 1. Download or clone this repository
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" in the top right
@@ -23,11 +24,13 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 5. The Element Inspector icon will appear in your toolbar
 
 ### Option 2: Chrome Web Store (Coming Soon)
-*This extension will be available on the Chrome Web Store soon.*
+
+_This extension will be available on the Chrome Web Store soon._
 
 ## � How to Use
 
 ### Quick Start
+
 1. **Activate**: Click the Element Inspector icon in your toolbar
 2. **Start Inspecting**: Click "Start Inspecting" in the popup
 3. **Select Element**: Click any element on the webpage
@@ -36,14 +39,17 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 ### Advanced Usage
 
 #### Element Selection Methods
+
 - **Primary**: Click "Start Inspecting" → Click any element
 - **Alternative**: Right-click any element while in inspect mode
 
 #### Keyboard Shortcuts
+
 - `Ctrl+Shift+I` (Windows/Linux) or `Cmd+Shift+I` (Mac): Toggle inspect mode
 - `Escape`: Exit inspect mode
 
 #### Inspector Window Features
+
 - **Element Info**: Tag name, ID, classes, attributes
 - **CSS Properties**: Filtered list showing only meaningful CSS values
 - **DOM Tree**: Navigate through element relationships
@@ -53,16 +59,19 @@ A powerful Chrome extension for web developers and designers to inspect and anal
 ## 🛠️ Technical Details
 
 ### Architecture
+
 - **Manifest V3**: Modern Chrome extension architecture
 - **Content Scripts**: Non-intrusive DOM interaction
 - **Service Worker**: Background processing and data management
 - **Chrome APIs**: Tabs, scripting, and runtime messaging
 
 ### Supported Browsers
+
 - ✅ Chrome 88+
 - ✅ Chromium-based browsers (Edge, Brave, etc.)
 
 ### File Structure
+
 ```
 Element Inspector/
 ├── manifest.json          # Extension configuration
@@ -79,10 +88,12 @@ Element Inspector/
 ## 🔧 Development
 
 ### Prerequisites
+
 - Chrome browser with Developer Mode enabled
 - Basic knowledge of Chrome Extension APIs
 
 ### Setup for Development
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/element-inspector.git
@@ -98,6 +109,7 @@ cd element-inspector
 ```
 
 ### Making Changes
+
 1. Edit the source files
 2. Go to `chrome://extensions/`
 3. Click the refresh icon on the Element Inspector extension
@@ -108,21 +120,26 @@ cd element-inspector
 ### Common Issues
 
 **Extension not working after page refresh**
+
 - Solution: The extension context may have been invalidated. Refresh the page and try again.
 
 **Can't select certain elements**
+
 - Solution: Some elements may have complex event handling. Try right-clicking instead of left-clicking.
 
 **Inspector window not opening**
+
 - Solution: Check if popups are blocked for the current site. Allow popups in browser settings.
 
 ### Error Messages
 
 **"Extension Reloaded"** (Orange notification)
+
 - The extension was reloaded in development mode
 - Refresh the webpage and try again
 
-**"Error inspecting element"** (Red notification)  
+**"Error inspecting element"** (Red notification)
+
 - The selected element couldn't be analyzed
 - Try selecting a different element
 
@@ -131,6 +148,7 @@ cd element-inspector
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Development Guidelines
+
 - Follow existing code style and structure
 - Test thoroughly on different websites
 - Update README if adding new features
@@ -149,6 +167,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 If you encounter any issues or have questions:
+
 1. Check the troubleshooting section above
 2. Open an issue on GitHub
 3. Review Chrome extension documentation
